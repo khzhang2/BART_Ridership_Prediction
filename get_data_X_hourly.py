@@ -47,15 +47,16 @@ def construct_OD(process_name, data_X_org, from_ind, to_ind, OD_hour, data_X_hou
 
 
 if __name__ == '__main__':
-    OD_hour = pd.read_csv('/Volumes/GoogleDrive/My Drive/Graduate/SP22 CE 299/data/BART/hour data/date-hour-soo-dest-2019.csv', header=None)
+    OD_hour = pd.read_csv('/Volumes/GoogleDrive/My Drive/Graduate/SP22 CE 299/data/BART/hour data/date-hour-soo-dest-2019.csv', header=None)  # mac
+    # OD_hour = pd.read_csv('G:/我的云端硬盘/Graduate/SP22 CE 299/data/BART/hour data/date-hour-soo-dest-2019.csv', header=None)  # windows
     OD_hour.columns = ['date', 'hour', 'org', 'dest', 'trip_count']
     data_X_org = pd.read_csv('./data/data_X.csv', index_col=0).iloc[:48, :]
 
     # data_X_hour = np.zeros([OD_hour.shape[0], 37])
 
-    n_cpu = multiprocessing.cpu_count()//2
+    n_cpu = multiprocessing.cpu_count()
 
-    interval = len(OD_hour)//n_cpu * np.arange(n_cpu)
+    interval = len(OD_hour) // n_cpu * np.arange(n_cpu)
     interval = np.append(interval, OD_hour.shape[0])
 
     pool = Pool(processes=n_cpu)
