@@ -10,7 +10,7 @@ Simini, F., Barlacchi, G., Luca, M., & Pappalardo, L. (2021). A Deep Gravity mod
 
 ### Table of Contents
 - Data Processing of [Smart Location Data](https://github.com/HaTT2018/Deep_Gravity/blob/main/Deep%20Gravity%20-%20Data%20Processing.ipynb) and [BART Ridership Data](https://github.com/HaTT2018/Deep_Gravity/blob/main/bart_data.py)
-- [Deep Gravity Model](https://github.com/HaTT2018/Deep_Gravity/blob/main/Deep%20Gravity%20-%20Model.ipynb): From socio-economics features (see figuire below) to original-destination (OD) pairs
+- [Deep Gravity Model](https://github.com/HaTT2018/Deep_Gravity/blob/main/Deep%20Gravity%20-%20Model.ipynb): From socio-economics features (see table below) to original-destination (OD) pairs
   <img src="./imgs/features.png" width="500">
 - [Spatio-temporal Prediction of BART Ridership Using Convolutional Neural Network](https://github.com/HaTT2018/Deep_Gravity/blob/main/Deep%20Gravity%20-%20Model%20-%20Conv.ipynb): Use previous *5 days* ridership to predict the next following *4 days* ridership. (Prediction horizon may subject to change)
 - [Spatio-temporal Prediction of BART Ridership Using Graph Convolutional Neural Network](https://github.com/HaTT2018/Deep_Gravity/blob/main/Deep%20Gravity%20-%20Model%20-%20ConvGraph.ipynb): Use previous *5 days* ridership to predict the next following *4 days* ridership. (Prediction horizon may subject to change)
