@@ -39,6 +39,14 @@ def eliminate_nan(b):
     return c
 
 
+def get_CPC(pred, labels):
+    pred = pred.reshape(-1, 1)
+    labels = labels.reshape(-1, 1)
+    res_min = np.concatenate([pred, labels], axis=1).min(axis=1).flatten()
+    CPC = np.sum(res_min)*2 / (np.sum(pred) + np.sum(labels))
+    return CPC
+
+
 def get_class(v):
     # v is 1-d or 2-d array
     # we set that there are 100 classes between 0 and 1
