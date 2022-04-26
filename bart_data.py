@@ -45,7 +45,7 @@ if __name__ == '__main__':
     stops = bart_data['Origin'].drop_duplicates()
     num_stops = stops.shape[0]  # =50
     # dims: (org, dest, time[hr])
-    bart_OD = np.zeros([num_stops, num_stops, 24*365])
+    bart_OD = np.zeros([num_stops, num_stops, 24*366])  # 366 or 365 days
 
     stop_table = pd.DataFrame(
         range(num_stops),
@@ -53,13 +53,12 @@ if __name__ == '__main__':
         columns=['stop_index']
     )
 
-    num_interval = n_cpu
+    num_interval = multiprocessing.cpu_count()
     interval = len(bart_data)//num_interval * np.arange(num_interval)
     interval = np.append(interval, bart_data.shape[0])
     interval
 
-
-    n_cpu = multiprocessing.cpu_count()
+    n_cpu = num_interval
 
     pool = Pool(processes=n_cpu)
     params = []
