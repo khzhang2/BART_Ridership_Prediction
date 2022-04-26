@@ -93,6 +93,7 @@ def denormalize2D(V, V_min, V_max):
 
 def const_4d_OD(OD, t_past, t_future):
     # input OD shape: [num_stations, num_stations, time_seq_len]
+    OD = np.transpose(OD, (2, 0, 1))[:, np.newaxis, :, :]
     OD_4d = np.zeros(OD.shape)
     OD_4d = np.repeat(OD_4d, t_past+t_future, axis=1)  # past t_past days plus future t_future days
     for i in range(t_past + t_future, OD.shape[0]):
