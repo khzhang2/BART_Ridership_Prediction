@@ -1,2 +1,2 @@
-﻿,t_past,t_pre,prop,mask,path
-0,5,4,0.5,0,./data/3d_2020_30days.npy
+﻿,t_past,t_pre,prop,mask,year
+0,5,4,0.5,0,2020
