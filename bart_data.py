@@ -37,7 +37,7 @@ def get_doy(d):
 
 
 if __name__ == '__main__':
-    bart_path = '/Volumes/Google Drive/My Drive/Graduate/SP22 CE 299/data/BART/date-hour-soo-dest-2019.csv'
+    bart_path = '/Volumes/Google Drive/My Drive/Graduate/SP22 CE 299/data/BART/hour data/date-hour-soo-dest-2020.csv'
     bart_data = pd.read_csv(bart_path, header=None)
     bart_data.columns = ['Date', 'Hour', 'Origin', 'Dest', 'Count']
     bart_data.head(2)
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         columns=['stop_index']
     )
 
-    num_interval = 8
+    num_interval = n_cpu
     interval = len(bart_data)//num_interval * np.arange(num_interval)
     interval = np.append(interval, bart_data.shape[0])
     interval
