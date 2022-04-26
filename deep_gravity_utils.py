@@ -91,29 +91,16 @@ def denormalize2D(V, V_min, V_max):
     return denormalized_V
 
 
-def sliding_window(T, T_org, seq_len, label_seq_len):  # was: (T, T_org, seq_len, label_seq_len)
-    # seq_len is equal to window_size
-    # T (np.ndarray) has dim: sample size, dim
-    K = T.shape[0] - seq_len - label_seq_len + 1  # Li, et al., 2021, TRJ part C, pp. 8
-    
-#     TT_org = T_org.reshape(-1, 1)
+def const_4d_OD(OD, t_past, t_future):
+    # input OD shape: [num_stations, num_stations, time_seq_len]
+    OD_4d = np.zeros(OD.shape)
+    OD_4d = np.repeat(OD_4d, t_past+t_future, axis=1)  # past t_past days plus future t_future days
+    for i in range(t_past + t_future, OD.shape[0]):
+        OD_4d[i, :, :, :] = OD[i-t_past-t_future:i, 0, :, :]
+        
+    print('Memory occupied %.4f MB'%((OD_4d.size * OD_4d.itemsize)/1024**2) )
 
-    # assemble the data into 3D
-    x_set = T[:K, np.newaxis, :]
-#     x_set = np.concatenate(TT[i : K+i, 0] for i in range(seq_len), axis=1)
-    for i in range(1, seq_len):
-        x_set = np.concatenate((x_set, T[i:K+i, np.newaxis, :]), axis=1)
-    
-    y_set = T_org[seq_len:K+seq_len, np.newaxis, :]
-    for i in range(1, label_seq_len):
-        y_set = np.concatenate((y_set, T_org[i+seq_len:K+i+seq_len, np.newaxis, :]), axis=1)
-    
-#     y_set = np.vstack(T_org[i+seq_len : K+seq_len+i, 0] for i in range(label_seq_len)).T
-    
-    assert x_set.shape[0] == y_set.shape[0]
-
-    # return size: n_samp, seq_len
-    return x_set, y_set
+    return OD_4d[t_past + t_future:,:,:,:]
 
 
 def setup_seed(seed):
