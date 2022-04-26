@@ -8,26 +8,36 @@ from torch import nn
 
 
 def mape_loss_func(preds, labels, m):
+    preds = preds.flatten()
+    labels = labels.flatten()
     mask = preds > m
     return np.mean(eliminate_nan(np.fabs(labels[mask]-preds[mask])/labels[mask]))
 
 
 def smape_loss_func(preds, labels, m):
+    preds = preds.flatten()
+    labels = labels.flatten()
     mask = preds > m
     return np.mean(2*np.fabs(labels[mask]-preds[mask])/(np.fabs(labels[mask])+np.fabs(preds[mask])))
 
 
 def mae_loss_func(preds, labels, m):
+    preds = preds.flatten()
+    labels = labels.flatten()
     mask = preds > m
     return np.mean(np.fabs((labels[mask]-preds[mask])))
 
 
 def nrmse_loss_func(preds, labels, m):
+    preds = preds.flatten()
+    labels = labels.flatten()
     mask = preds > m
     return np.sqrt(np.sum((preds[mask] - labels[mask])**2)/preds[mask].flatten().shape[0])/(labels[mask].max() - labels[mask].min())
 
 
 def nmae_loss_func(preds, labels, m):
+    preds = preds.flatten()
+    labels = labels.flatten()
     mask = preds > m
     return np.mean(np.fabs((labels[mask]-preds[mask]))) / (labels[mask].max() - labels[mask].min())
 
