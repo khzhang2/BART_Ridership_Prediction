@@ -1,10 +1,7 @@
 import numpy as np
-import pandas as pd
 import os
 import random
-
 import torch
-from torch import nn
 
 
 def mape_loss_func(preds, labels, m):
@@ -57,48 +54,41 @@ def get_CPC(pred, labels):
     return CPC
 
 
-def get_class(v):
-    # v is 1-d or 2-d array
-    # we set that there are 100 classes between 0 and 1
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    if len(v.shape) == 1:
-        try:
-            v = v.reshape(-1, v.shape[0])
-        except:
-            v = v.view(-1, v.shape[0])
+def setup_seed(seed):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)    
+    torch.backends.cudnn.deterministic = True
+    np.random.seed(seed)
+    random.seed(seed)
 
+
+def get_num_fold():
+    num_fold = len(next(iter(os.walk('./runs/')))[1])
+    return num_fold
+
+
+def save_model(net, name):
+    num_fold = get_num_fold()
     try:
-        v = np.array(v)
-        v_cls = np.zeros_like(v)
-        for i in range(v.shape[0]):
-            for j in range(v.shape[1]):
-                v_cls[i, j] = int(np.floor(v[i, j]*100))//1
-        return torch.tensor(v_cls, dtype=torch.float32).to(device)
-    except:
-        None
-        # v_cls = torch.zeros_like(v)
-        # for i in range(v.shape[0]):
-        #     for j in range(v.shape[1]):
-        #         v_cls[i, j] = int(torch.floor(v[i, j]*100))//1
-        # return torch.tensor(v_cls, dtype=torch.float32).to(device)
+        torch.save(net.state_dict(), './runs/run%i/%s.pth' % (num_fold, name))
+    except Exception as e:
+        raise RuntimeError('No fold for this experiment created:'+str(e))
 
 
-def normalize2D_tSNE(V):
-    V = np.array(V)
-    return ( V ) / ( V.max(0) - V.min(0) ), V.min(0), V.max(0)
+def save_res(res, name):
+    num_fold = get_num_fold()
+    try:
+        res.to_csv('./runs/run%i/%s.csv' % (num_fold, name))
+    except Exception as e:
+        raise RuntimeError('No fold for this experiment created:'+str(e))
 
 
-def normalize2D(V):
-    V = np.array(V)
-    return ( V - V.min(0) ) / ( V.max(0) - V.min(0) ), V.min(0), V.max(0)
-
-
-def denormalize2D(V, V_min, V_max):
-    V = np.array(V)
-    V_min = np.array(V_min)
-    V_max = np.array(V_max)
-    denormalized_V = V * (V_max - V_min) + V_min
-    return denormalized_V
+def save_fig(fig, name):
+    num_fold = get_num_fold()
+    try:
+        fig.savefig('./runs/run%i/%s.png' % (num_fold, name), dpi=300)
+    except Exception as e:
+        raise RuntimeError('No fold for this experiment created:'+str(e))
 
 
 def const_4d_OD(OD, t_past, t_future):
@@ -109,26 +99,6 @@ def const_4d_OD(OD, t_past, t_future):
     for i in range(t_past + t_future, OD.shape[0]):
         OD_4d[i, :, :, :] = OD[i-t_past-t_future:i, 0, :, :]
         
-    print('Memory occupied %.4f MB'%((OD_4d.size * OD_4d.itemsize)/1024**2) )
+    print('Memory occupied %.4f MB' % ((OD_4d.size * OD_4d.itemsize)/1024**2) )
 
-    return OD_4d[t_past + t_future:,:,:,:]
-
-
-def setup_seed(seed):
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)    
-    torch.backends.cudnn.deterministic = True
-    np.random.seed(seed)
-    random.seed(seed)
-
-
-def save_model(net, name):
-    num_fold = get_num_fold() + 1
-    try:
-        torch.save(net.state_dict(), './runs/run%i/%s.pth'%(num_fold, name))
-    except:
-        raise RuntimeError('No fold for this experiment created')
-
-def get_num_fold():
-    num_fold = len(next(iter(os.walk('./runs/')))[1])
-    return num_fold
+    return OD_4d[t_past + t_future:, :, :, :]
