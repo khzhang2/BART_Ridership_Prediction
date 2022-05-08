@@ -91,6 +91,14 @@ def save_fig(fig, name):
         raise RuntimeError('No fold for this experiment created:'+str(e))
 
 
+def save_array(arr, name):
+    num_fold = get_num_fold()
+    try:
+        np.save('./runs/run%i/%s.npy' % (num_fold, name), arr)
+    except Exception as e:
+        raise RuntimeError('No fold for this experiment created:'+str(e))
+
+
 def const_4d_OD(OD, t_past, t_future):
     # input OD shape: [num_stations, num_stations, time_seq_len]
     OD = np.transpose(OD, (2, 0, 1))[:, np.newaxis, :, :]
