@@ -256,10 +256,11 @@ def main():
     smape = dgu.smape_loss_func(pred, labels, m)
     nrmse = dgu.nrmse_loss_func(pred, labels, m)
     nmae = dgu.nmae_loss_func(pred, labels, m)
+    cpc = dgu.get_CPC(pred, labels)
 
     result_df = pd.DataFrame(
-        np.array([[mae, mape, smape, nrmse, nmae]]),\
-        index=[0], columns=['mae', 'mape', 'smape', 'nrmse', 'nmae']
+        np.array([[mae, mape, smape, nrmse, nmae, cpc]]),\
+        index=[0], columns=['mae', 'mape', 'smape', 'nrmse', 'nmae', 'cpc']
         )
 
     num_fold = dgu.get_num_fold()
