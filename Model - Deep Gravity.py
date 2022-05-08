@@ -278,4 +278,5 @@ if __name__ == '__main__':
     n_iter = args.iteration
 
     for i in range(n_iter):
+        print('Start iteration #%i'%i)
         main()
