@@ -269,6 +269,7 @@ def main():
     dgu.save_fig(fig_loss, 'fig_loss')
     dgu.save_fig(fig_res, 'fig_res')
     dgu.save_res(result_df, 'result_df')
+    dgu.save_array(pred, 'pred')
 
 
 if __name__ == '__main__':
