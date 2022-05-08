@@ -185,7 +185,7 @@ def main():
     # train
     model.train()
 
-    epochs = 2
+    epochs = 1000
 
     # assert len(src_loader) == len(tar_loader)
     
