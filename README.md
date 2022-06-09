@@ -17,4 +17,4 @@ Should install
 - [Ridership Prediction using Linear Regression Model](./Model%20-%20Linear.ipynb): Use previous *5 days* ridership to predict the next following *4 days* ridership. (Prediction horizon may subject to change, see "[config.csv](./config.csv)" for details)
 - [Spatio-temporal Prediction of BART Ridership Using Convolutional Neural Network](./Model%20-%20Conv.ipynb): Use previous *5 days* ridership to predict the next following *4 days* ridership. (Prediction horizon may subject to change, see "[config.csv](./config.csv)" for details)
 - [Spatio-temporal Prediction of BART Ridership Using Graph Convolutional Neural Network](./Model%20-%20ConvGraph%202.ipynb): Use previous *5 days* ridership to predict the next following *4 days* ridership. (Prediction horizon may subject to change, see "[config.csv](./config.csv)" for details)
-- A detailed comparison report of the Linear Regression, CNN and GCN can be found [here](./report/Report.pdf).
+- A detailed comparison report of the Linear Regression, CNN and GCN can be found [here](./reports/Report.pdf).
