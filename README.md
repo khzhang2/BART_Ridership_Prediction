@@ -1,5 +1,5 @@
 # BART Ridership Prediction
-Author: Kaihang Zhang
+Author: HaTT2018
 ## Introduction
 Models (Linear Rregression, Convolutional Neural Network, Graph Convolutional Network) are for ridership prediction of Bay Area Rapid Transit (BART). This repository (excluding "Model - Deep Gravity.ipynb") is for UC Berkeley course [CE 259](https://classes.berkeley.edu/content/2022-spring-civeng-259-001-lec-001) term project.
 
